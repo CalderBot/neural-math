@@ -1,0 +1,134 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{amssymb,mathrsfs,mathtools}
+\usepackage[margin=1in]{geometry}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+% FONTS -----------------------------------------------------------
+\newcommand\Rb{{\mathbb R}} % Reals
+\newcommand\Zb{{\mathbb Z}} % Integers
+\newcommand\Nb{{\mathbb N}} % Natural numbers
+\newcommand\Lc{{\mathcal L}}
+\newcommand\Xs{{\mathscr X}}
+% ARROWS--------------------------------
+\newcommand{\isom}{\simeq}
+%\newcommand{\def}{\coloneq}
+\newcommand{\wt}{\widetilde}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\mTo}{\longmapsto}
+\newcommand{\pipe}{\:|\:}
+\newcommand{\dashto}{\dashrightarrow}
+\newcommand{\dashTo}{\longdashrightarrow}
+\newcommand{\dashtof}[1]{\stackrel{#1}{\dashrightarrow}}
+\newcommand{\dashTof}[1]{\stackrel{#1}{\longdashrightarrow}}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\tof}[1]{\stackrel{#1}{\rightarrow}}
+\newcommand{\ltof}[1]{\stackrel{#1}{\leftarrow}}
+\newcommand{\intof}[1]{\stackrel{#1}{\hookrightarrow}}
+\newcommand{\Tof}[1]{\stackrel{#1}{\longrightarrow}}
+\newcommand{\TOf}[1]{\stackrel{#1}{\Longrightarrow}}
+
+% MATH-------------------------------------------
+\DeclareMathOperator{\Sets}{Sets}
+% DOCUMENT -------------------------------------------------------------
+
+\begin{document}
+
+\title{Calculus for Deep Learners}
+\maketitle
+
+
+\subsection{Sets}\label{S:Sets}
+Sets are possibly infinite collections of non-duplicated elements, denoted $\{a,b,c,...\}$.  The sets we will primarily encounter are:
+\begin{itemize}
+ \item $\phi := \{\:\}$, the \textbf{empty set}, which has no elements at all.
+ \item $\Nb := \{\:0,1,2,...\}$, the \textbf{natural numbers}.
+ \item $\Zb := \{\:0,\pm 1, \pm 2,...\}$, the \textbf{integers}.
+ \item $\Rb$, the \textbf{real numbers}.
+\end{itemize}
+If $X$ and $Y$ are sets, say $X$ is a \textbf{subset} of $Y$ (written $X\subset Y$) when every element of $X$ is also an element of $Y$.  For example 
+$$\phi\subset\Nb\subset\Zb\subset\Rb$$ 
+is a chain of subsets.  Note that with this notion, $X\subset X$ for any $X$.
+In practice subsets are often defined as the elements in a set satisfying some conditions, and is denoted
+$$ \{x\in X \pipe \text{x satisfies the conditions } \} \subset X. $$
+Some examples we will encounter are:
+\begin{itemize}
+ \item $\Rb^{>0} \coloneqq \{ x\in \Rb \pipe x>0 \}$, the \textbf{positive real numbers}.
+ \item $\Rb^{\geq 0} := \{ x\in \Rb \pipe x\geq 0 \}$, the \textbf{non-negative real numbers}.
+ \item $\Rb^{\times} := \{ x\in \Rb \pipe x\neq 0 \}$, the \textbf{non-zero real numbers}.
+\end{itemize}
+The \textbf{set operations} we will use, for two sets $X$ and $Y$, are:
+\begin{itemize}
+ \item $X \cup Y = \{ a \pipe a\in X \text{ or } a\in Y\}$, the \textbf{union} of $X$ and $Y$.
+ \item $X \cap Y = \{ a \pipe a\in X \text{ and } a\in Y\}$, the \textbf{intersection} of $X$ and $Y$.
+ \item $X \backslash Y = \{ a \pipe a\in X \text{ and } a\notin Y\}$, the \textbf{difference} of $X$ and $Y$.
+ \item $X \times Y = \{ (x,y) \pipe x\in X \text{ and } y\in Y\}$, the \textbf{Cartesian product} of $X$ and $Y$.
+\end{itemize}
+The above operations can be iterated multiple times.  If $n$ is a fixed positive integer and $X$ is any set, we denote the n-fold cartesian product
+  $$X^n := X\times \cdots \times X = \{(x_1,\dots,x_n)\pipe x_i\in X \text{ for } i\in \{1,\dots,n\}\}$$
+
+
+\subsection{Functions} Let $X$ and $Y$ be sets.  A \textbf{function} $f$ from X to Y (also called a $Y$-valued function on $X$, and also called a function with \textbf{domain} $X$ and \textbf{target} $Y$), is a rule assigning an element $f(x)\in Y$ to each element $x\in X$.  To make the domain and target clear, mathematicians often include them in the notation for a function, writing $f:X\To Y$.  It is also common to describe $f$ in terms of its values on elements (or textbf{points}) of $X$, using the notation $X\ni x\mTo{f(x)}\in Y$.
+
+ Let $\Sets(X,Y)$ denote the set of all functions from $XS$ to $Y$.
+
+Two important ways to make new functions from existing ones are:
+\begin{enumerate}
+\item \textbf{Composition} Given functions $f:Y\To Z$ and $g:X\To Y$, the composition is a function $f\circ g:X\To Z$ defined by the rule $f\circ g(x) := f(g(x)$) for $x\in X$.
+\item \textbf{Import of Operations} Operations on a set $Y$ can be \textbf{imported} to the set of functions $\Sets(X,Y)$.
+This is best illustrated by example: let $Y=\Rb$.  Then $\Rb$ has the operations of addition and multiplication, which can be imported to the set $\Sets(X,\Rb)$ of \textbf{real valued functions} on $X$.
+  Indeed, for $ f,g\in \Sets(X,\Rb)$, define $ f+g:X\To \Rb$ by the rule $(f + g)(x):= f(x)+ g(x)$ and $ fg:X\To \Rb$ by the rule $fg(x):= f(x)g(x)$.  One says we have endowed $\Sets(X,\Rb)$ with \textbf{pointwise} addition and multiplicaton.
+\end{enumerate}
+
+\subsection{Some properties of $\Rb^n$} For any $n\in\Nb$, $$\Rb^n = \{(a_1,\dots,a_n\pipe a_i\in\Rb)$$ is the set of $n-$tuples of real numbers.  But $\Rb^n$ admots musch more structure than just that of a set.  Here is some of the structure we will implicitly equip $Rb^n$ with:
+\begin{enumerate}
+\item It is a vector space, and whenever convenient we switch back and forth between viewing elements of $\Rb^n$ as vectors and as points.
+\item For every $p\in [1,\infty]$ there is a measure of \textbf{magnitude (or length)} on $\Rb^n$, given by the formula
+$$ \Rb^n\ni a=(a_1,\dots,a_n)\mTo |a|_p:=(|a_1|^p+\cdots+|a_n|^p)^{1/p}\in \Rb^{\geq 0}.$$
+These functions are called the $p$-norms on $\Rb^n$.  The limiting case $p=\infty$ is also useful, and is given by $|a|_\infty:=max\{|a_1|,\dots,|a_n|\}$.
+\item Each $p$-norm gives rise to a notion of distance $d_p$ between points by the formula:
+$$d_p(v,w):=|v-w|_p.$$
+Note then that $|v|_p$ is the distance from $0\in\Rb^n$ to $v$.
+The case $p=2$ is called \textbf{Euclidian distance}, and agrees with the notion of distance in our day to day life. When we say or write a norm without the ``$p$'', it is implicit that $p=2$.
+\end{enumerate}
+
+\begin{exercise} Note that in $\Rb^2$, Euclidian distance as defined above is the same as the usual notion of distance between points given by the Pythagorean theorem.  Now make a drawing and use the Pythagorean theorem (twice) to show that in $\Rb^3$, Euclidian distance also agrees with the distance between points in our universe.
+\end{exercise}
+
+\subsection{Metric Spaces} A \textbf{metric (or distance function)} on a set $X$ is a function
+$$d:X\times X\To \Rb^{\geq0}$$ satisfying:
+ \begin{itemize}
+  \item $d(x,y)=0\iff x=y$ \textbf{(definiteness)}
+  \item $d(x,y) = d(y,x)$ \textbf{(symmetry)}
+  \item $d(x,z)\leq d(x,y)+d(y,z)$ \textbf{(triangle inequality)}
+ \end{itemize}
+A \textbf{metric space} is a set equipped with a metric.
+
+\subsection{Continuous Functions} To avoid the subject of topology, and because we are interested in doing calculus, we will only define the notion of continuity for functions from subsets of $\Rb^k$ to subsets of $\Rb^n$ (for any $k,n\geq 1$).  There are several ways to define continuity, all of which give the same result.  We will phrase continuity in terms of balls in $\Rb^n$.
+
+ For any $a\in\Rb^n$ and any $r\in \Rb^{> 0}$, the \textbf{ball (of radius r) around a} is defined as the set
+ \[ B_r(a):=\{x\in \Rb^n\pipe d(x,a)<r\} \]
+ Remember that $d(x,a)=|x-a|$ is the Euclidian distance.  The \textbf{punctured ball (of radius r) around a} is defined as
+ \[ B_r(a)^\times:= B_r(a)\backslash\{a\}, \]
+ that is, it is the ball with the point $a$ removed.
+\begin{exercise}
+Draw $B_2(1)\subset \Rb^1$, $B_2((1,0))\subset \Rb^2$, and $B_2((1,0,0))\subset \Rb^3$.
+\end{exercise}
+
+The next step towards defining continuity is the notion of a limit.  Suppose $f:\Rb^k\To \Rb^n$ and $x_0\in\Rb^k$.  We say \textbf{the limit of f as x approaches a equals y}, written...
+
+
+
+
+
+\end{document}
