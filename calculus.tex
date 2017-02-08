@@ -21,7 +21,6 @@
 \newcommand\Xs{{\mathscr X}}
 % ARROWS--------------------------------
 \newcommand{\isom}{\simeq}
-%\newcommand{\def}{\coloneq}
 \newcommand{\wt}{\widetilde}
 \newcommand{\diag}{\delta}
 \newcommand{\id}{\iota}
@@ -43,6 +42,7 @@
 
 % MATH-------------------------------------------
 \DeclareMathOperator{\Sets}{Sets}
+%\DeclareMathOperator{\lim}{lim}
 % DOCUMENT -------------------------------------------------------------
 
 \begin{document}
@@ -85,8 +85,12 @@ The above operations can be iterated multiple times.  For example if $n$ is a fi
 
 \subsection{Functions} Let $X$ and $Y$ be sets.  A \textbf{function} $f$ from X to Y (also called a $Y$-valued function on $X$, and also called a function with \textbf{domain} $X$ and \textbf{target} $Y$), is a rule assigning an element $f(x)\in Y$ to each element $x\in X$.  To make the domain and target clear, mathematicians often include them in the notation for a function, writing
  \[f:X\To Y\quad\text{or equivalently}\quad X\Tof{f}Y.\]
+ Then \textbf{Sets}$(X,Y)$ denotes the set of all functions from $X$ to $Y$.
+ 
+It is sometimes useful to talk about the set of values $f$ takes on a subset $U\subset X$.  This is referred to as the \textbf{image of U under f} and written $$f(U):=\{ f(x)\pipe x\in U\}\subset Y.$$
+Similarly, for a subset $V\subset Y$, one can speak of the \textbf{inverse image under f of V}, which is the set $$f^{-1}(V):=\{ x\in X\pipe f(x)\in V \}$$  
+Note that inverse images exist regardless of whether $f$ is an invertible function.  In fact, by definition, $f$ is \textbf{invertible} if and on ly if for every $y\in Y$, $f^{-1}(\{y\})$ consists of exactly one point.
  %It is also common to describe $f$ in terms of its values on elements (or \textbf{points}) of $X$, using the notation $X\ni x\mTo{f(x)}\in Y$.
-Let \textbf{Sets}$(X,Y)$ denote the set of all functions from $X$ to $Y$.
 
 Some fundamental classes of functions are the identity functions, the diagonal functions, and the operations:
 \begin{enumerate}
@@ -99,15 +103,15 @@ Some fundamental classes of functions are the identity functions, the diagonal f
 
 Two fundamental ways to make new functions from existing ones are:
 \begin{enumerate}
-\item \textbf{Composition:} Given functions $Y\Tof{f} Z$ and $X\Tof{g} Y$, the composition is a function $f\circ g:X\To Z$ defined by the rule
- \[f\circ g(x) := f(g(x)) \quad\text{for}\quad x\in X.\]
+\item \textbf{Composition:} Given functions$X\Tof{g} Y$ and $Y\Tof{f} Z$, the composition is the function defined by first applying $g$ and then $f$.  Explicitly:
+ \[f\circ g:X\To Z \qquad x\mTo f(g(x)).\]
  \item \textbf{Cartesian Product} Given functions $X\Tof{f} Y$ and $X'\Tof{g} Y'$, the Cartesian product is a function $f\times g$ defined by the rule
  \[f\times g:X\times X' \To Y\times Y' \qquad (x,x')\mTo (f(x),g(x'))\]
 \end{enumerate}
 
-Using the fundamental function classes along with function composition and Cartesian product, we get two other useful ways to build fuctions:
+Using the fundamental function classes along with composition and Cartesian product, we get two other useful ways to build fuctions:
 \begin{enumerate}
-  \item \textbf{Product:} If $X\Tof{f} Y$ and $X\Tof{g} Z$ are functions with the same domain, we define their \textbf{product} by $(f,g):=f\times g \circ \delta$  (which we will denote $(f,g)$ to distinguish it from the Cartesian product).  Expressed more explicitly, the product is
+  \item \textbf{Product:} If $X\Tof{f} Y$ and $X\Tof{g} Z$ are functions with the same domain, we define their \textbf{product} by $(f,g):=f\times g \circ \delta$  (we denote the product $(f,g)$ to distinguish it from the Cartesian product).  Expressed more explicitly, the product is
  \[    (f,g):X\To Y\times Z \qquad x\mTo (f(x),g(x)). \]  
 \item \textbf{Pointwise Operations:} Given any set $X$ and operation $Y^n\Tof{\mu} Y$, we can define an operation (also denoted $\mu$) on the set of functins $\Sets(X,Y)$ by so-called \textbf{pointwise} application of the operation.  Explicitly, for $f_1,\dots,f_n\in \Sets(X,Y)$ 
 \[\mu(f_1,\dots,f_n):X\To Y\qquad \mu(f_1,\dots,f_n)(x):=\mu(f_1(x),\dots,f_n(x))\]
@@ -125,7 +129,7 @@ Let $\Rb^2\Tof{\mu}\Rb$ be addition, then for $f,g\in\Sets(X,\Rb)$, we have poin
 \end{remark}
 
 
-\subsection{Some properties of $\Rb^n$} For any $n\in\Nb$, $$\Rb^n = \{(a_1,\dots,a_n\pipe a_i\in\Rb)$$ is the set of $n-$tuples of real numbers.  But $\Rb^n$ admits much more structure than just that of a set.  Here is some of the structure we will implicitly equip $Rb^n$ with:
+\subsection{Some properties of $\Rb^n$} For any $n\in\Nb$, $$\Rb^n = \{(a_1,\dots,a_n\pipe a_i\in\Rb)$$ is the set of $n-$tuples of real numbers.  But $\Rb^n$ admits much more structure than just that of a set.  Here is some of the structure we will implicitly equip $\Rb^n$ with:
 \begin{enumerate}
 \item It is a vector space, and whenever convenient we switch back and forth between viewing elements of $\Rb^n$ as vectors and as points.
 \item For every $p\in [1,\infty]$ there is a measure of \textbf{magnitude (or length)} on $\Rb^n$, given by the formula
@@ -149,21 +153,42 @@ $$d:X\times X\To \Rb^{\geq0}$$ satisfying:
  \end{itemize}
 A \textbf{metric space} is a set equipped with a metric.
 
-\subsection{Continuous Functions} To avoid the subject of topology, and because we are interested in doing calculus, we will only define the notion of continuity for functions from subsets of $\Rb^k$ to subsets of $\Rb^n$ (for any $k,n\geq 1$).  There are several ways to define continuity, all of which give the same result.  We will phrase continuity in terms of balls in $\Rb^n$.
+\subsection{Lmiits and Continuity} To avoid the subject of topology, and because we are interested in doing calculus, we will only define the notion of continuity for functions from subsets of $\Rb^k$ to subsets of $\Rb^n$ (for any $k,n\geq 1$).  There are several ways to define continuity, all of which give the same result.  We will phrase continuity in terms of balls in $\Rb^n$.
 
  For any $a\in\Rb^n$ and any $r\in \Rb^{> 0}$, the \textbf{ball (of radius r) around a} is defined as the set
  \[ B_r(a):=\{x\in \Rb^n\pipe d(x,a)<r\} \]
  Remember that $d(x,a)=|x-a|$ is the Euclidian distance.  The \textbf{punctured ball (of radius r) around a} is defined as
  \[ B_r(a)^\times:= B_r(a)\backslash\{a\}, \]
  that is, it is the ball with the point $a$ removed.
+ 
+ Whenever $X\subset\Rb^n$ and $a\in X$, we can speak of balls in $X$, they are defined as $B_r^X(a):= B_r(a)\cap X$. 
+ 
 \begin{exercise}
 Draw $B_2(1)\subset \Rb^1$, $B_2((1,0))\subset \Rb^2$, and $B_2((1,0,0))\subset \Rb^3$.
 \end{exercise}
 
-The next step towards defining continuity is the notion of a limit.  Suppose $f:\Rb^k\To \Rb^n$ and $x_0\in\Rb^k$.  We say \textbf{the limit of f as x approaches a equals y}, written...
+Fix $X\subset \Rb^n$, $Y\subset \Rb^k$, $f:X\To Y$ and $x\in X$. The \textbf{limit of f at x}, written $\lim_x f$, is a point $y\in Y$ such that:
+\begin{equation}
+\text{ For all } r>0, \text{there exists an } R>0 \text{ such that } f(B_R^\times(x))\subset B_r(y).
+\end{equation}
+Such a point $y$ may not exist, but if it does exist then it is unique.  When the limit exists and equals $y$ we write $\lim_x f = y$.
 
+ 
+\begin{exercise}[Practice with limits] $ $
+\begin{enumerate}
+\item Show that in the 1-dimensional case this definition reduces to the ``$\in -\delta$'' definition of limits for functions $f:\Rb\To\Rb$.
+\item Show that $\lim_0 f$ does not exist for the function \[ \Rb\Tof{f}\Rb   \qquad  x\mTo\begin{cases}0 & x<0\\ 1 & x\geq 0\end{cases}  \]
+\item Find the limit at $(0,0)$ for the function  \[ \Rb^2\Tof{f}\Rb^2   \qquad  x\mTo\begin{cases}0 & x \neq (0,0)\\ 1 & x= (0,0)\end{cases}  \]
+\item Show that limits are unique if they exist.  That is, show that for any $X\tof{f}Y$, if  $\lim_x f = y$ and  $\lim_x f = y'$ then $y=y'$.
+\end{enumerate}
+\end{exercise}
 
-
-
+A function $X\tof{f}Y$ is called \textbf{continuous at x} for $x\in X$ when $\lim_x f = f(x)$.  That is, not only does the limit exist but it is equal to the value of $f$ at $x$.  We say $f$ is \textbf{continuous} if it is continuous for every $x\in X$.  
+\begin{proposition}[Composition of continuous functions] Let $X\Tof{f}Y$ and $Y\Tof{g} Z$ be composable functions, then  
+\begin{enumerate}
+\item If $f$ is continuous at $x\in X$ and $g$ is continuous at $f(x)\in Y$, then $g\circ f$ is continuous at $x$.
+\item If $f$ is continuous and $g$ is continuous at every point of $f(X)$, then $g\circ f$ is continuous.
+\end{enumerate}
+\end{proposition}
 
 \end{document}
