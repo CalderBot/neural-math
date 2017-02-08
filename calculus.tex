@@ -23,6 +23,9 @@
 \newcommand{\isom}{\simeq}
 %\newcommand{\def}{\coloneq}
 \newcommand{\wt}{\widetilde}
+\newcommand{\diag}{\delta}
+\newcommand{\id}{\iota}
+\newcommand{\op}{\mu}
 \newcommand{\To}{\longrightarrow}
 \newcommand{\mTo}{\longmapsto}
 \newcommand{\pipe}{\:|\:}
@@ -35,7 +38,7 @@
 \newcommand{\tof}[1]{\stackrel{#1}{\rightarrow}}
 \newcommand{\ltof}[1]{\stackrel{#1}{\leftarrow}}
 \newcommand{\intof}[1]{\stackrel{#1}{\hookrightarrow}}
-\newcommand{\Tof}[1]{\stackrel{#1}{\longrightarrow}}
+\newcommand{\Tof}[1]{\stackrel{#1}{\!\longrightarrow\!}}
 \newcommand{\TOf}[1]{\stackrel{#1}{\Longrightarrow}}
 
 % MATH-------------------------------------------
@@ -56,10 +59,11 @@ Sets are possibly infinite collections of non-duplicated elements, denoted $\{a,
  \item $\Zb := \{\:0,\pm 1, \pm 2,...\}$, the \textbf{integers}.
  \item $\Rb$, the \textbf{real numbers}.
 \end{itemize}
-If $X$ and $Y$ are sets, say $X$ is a \textbf{subset} of $Y$ (written $X\subset Y$) when every element of $X$ is also an element of $Y$.  For example 
+Let $X$ and $Y$ be sets.  $X$ is called a \textbf{subset} of $Y$ (written $X\subset Y$) when every element of $X$ is also an element of $Y$.  For example 
 $$\phi\subset\Nb\subset\Zb\subset\Rb$$ 
 is a chain of subsets.  Note that with this notion, $X\subset X$ for any $X$.
-In practice subsets are often defined as the elements in a set satisfying some conditions, and is denoted
+
+In practice subsets are often defined as the elements in a set satisfying some conditions:
 $$ \{x\in X \pipe \text{x satisfies the conditions } \} \subset X. $$
 Some examples we will encounter are:
 \begin{itemize}
@@ -67,30 +71,61 @@ Some examples we will encounter are:
  \item $\Rb^{\geq 0} := \{ x\in \Rb \pipe x\geq 0 \}$, the \textbf{non-negative real numbers}.
  \item $\Rb^{\times} := \{ x\in \Rb \pipe x\neq 0 \}$, the \textbf{non-zero real numbers}.
 \end{itemize}
-The \textbf{set operations} we will use, for two sets $X$ and $Y$, are:
+The \textbf{set operations} we will use are:
 \begin{itemize}
  \item $X \cup Y = \{ a \pipe a\in X \text{ or } a\in Y\}$, the \textbf{union} of $X$ and $Y$.
  \item $X \cap Y = \{ a \pipe a\in X \text{ and } a\in Y\}$, the \textbf{intersection} of $X$ and $Y$.
  \item $X \backslash Y = \{ a \pipe a\in X \text{ and } a\notin Y\}$, the \textbf{difference} of $X$ and $Y$.
  \item $X \times Y = \{ (x,y) \pipe x\in X \text{ and } y\in Y\}$, the \textbf{Cartesian product} of $X$ and $Y$.
 \end{itemize}
-The above operations can be iterated multiple times.  If $n$ is a fixed positive integer and $X$ is any set, we denote the n-fold cartesian product
+The above operations can be iterated multiple times.  For example if $n$ is a fixed positive integer and $X$ is any set, we denote the n-fold cartesian product
   $$X^n := X\times \cdots \times X = \{(x_1,\dots,x_n)\pipe x_i\in X \text{ for } i\in \{1,\dots,n\}\}$$
+ As a default we will use the letter $i$ for an index, so that for example $x_i$ denotes the $i$-th element of an \textbf{n-tuple} $(x_1,\dots,x_n)\in X^n$.
 
 
-\subsection{Functions} Let $X$ and $Y$ be sets.  A \textbf{function} $f$ from X to Y (also called a $Y$-valued function on $X$, and also called a function with \textbf{domain} $X$ and \textbf{target} $Y$), is a rule assigning an element $f(x)\in Y$ to each element $x\in X$.  To make the domain and target clear, mathematicians often include them in the notation for a function, writing $f:X\To Y$.  It is also common to describe $f$ in terms of its values on elements (or textbf{points}) of $X$, using the notation $X\ni x\mTo{f(x)}\in Y$.
+\subsection{Functions} Let $X$ and $Y$ be sets.  A \textbf{function} $f$ from X to Y (also called a $Y$-valued function on $X$, and also called a function with \textbf{domain} $X$ and \textbf{target} $Y$), is a rule assigning an element $f(x)\in Y$ to each element $x\in X$.  To make the domain and target clear, mathematicians often include them in the notation for a function, writing
+ \[f:X\To Y\quad\text{or equivalently}\quad X\Tof{f}Y.\]
+ %It is also common to describe $f$ in terms of its values on elements (or \textbf{points}) of $X$, using the notation $X\ni x\mTo{f(x)}\in Y$.
+Let \textbf{Sets}$(X,Y)$ denote the set of all functions from $X$ to $Y$.
 
- Let $\Sets(X,Y)$ denote the set of all functions from $XS$ to $Y$.
-
-Two important ways to make new functions from existing ones are:
+Some fundamental classes of functions are the identity functions, the diagonal functions, and the operations:
 \begin{enumerate}
-\item \textbf{Composition} Given functions $f:Y\To Z$ and $g:X\To Y$, the composition is a function $f\circ g:X\To Z$ defined by the rule $f\circ g(x) := f(g(x)$) for $x\in X$.
-\item \textbf{Import of Operations} Operations on a set $Y$ can be \textbf{imported} to the set of functions $\Sets(X,Y)$.
-This is best illustrated by example: let $Y=\Rb$.  Then $\Rb$ has the operations of addition and multiplication, which can be imported to the set $\Sets(X,\Rb)$ of \textbf{real valued functions} on $X$.
-  Indeed, for $ f,g\in \Sets(X,\Rb)$, define $ f+g:X\To \Rb$ by the rule $(f + g)(x):= f(x)+ g(x)$ and $ fg:X\To \Rb$ by the rule $fg(x):= f(x)g(x)$.  One says we have endowed $\Sets(X,\Rb)$ with \textbf{pointwise} addition and multiplicaton.
+\item \textbf{Identity functions:} For any set $X$, the identity function $\id$ (or $\id_X$ if more precision is needed), given by:
+ \[   X\Tof{\id}X \qquad x\mTo x   \]
+ \item \textbf{Diagonal functions:} For any set $X$ and $n\geq 2$, the diagonal function $\diag$ (or $\diag_X^n$ if more precision is needed), given by
+ \[   X\Tof{\diag}X^n \qquad x\mTo (x,\dots,x)   \]
+ \item \textbf{Operations:} For any set $X$ and $n\geq 1$, the \textbf{(n-ary) operations (on X)} are the functions $\Sets(X^n,X)$.  (When $n=1$ say \textbf{unary}, when $n=2$ say \textbf{binary}.  For example on $X=\Rb$ addition and multiplication are binary operations, and negation is a unary operation.)
 \end{enumerate}
 
-\subsection{Some properties of $\Rb^n$} For any $n\in\Nb$, $$\Rb^n = \{(a_1,\dots,a_n\pipe a_i\in\Rb)$$ is the set of $n-$tuples of real numbers.  But $\Rb^n$ admots musch more structure than just that of a set.  Here is some of the structure we will implicitly equip $Rb^n$ with:
+Two fundamental ways to make new functions from existing ones are:
+\begin{enumerate}
+\item \textbf{Composition:} Given functions $Y\Tof{f} Z$ and $X\Tof{g} Y$, the composition is a function $f\circ g:X\To Z$ defined by the rule
+ \[f\circ g(x) := f(g(x)) \quad\text{for}\quad x\in X.\]
+ \item \textbf{Cartesian Product} Given functions $X\Tof{f} Y$ and $X'\Tof{g} Y'$, the Cartesian product is a function $f\times g$ defined by the rule
+ \[f\times g:X\times X' \To Y\times Y' \qquad (x,x')\mTo (f(x),g(x'))\]
+\end{enumerate}
+
+Using the fundamental function classes along with function composition and Cartesian product, we get two other useful ways to build fuctions:
+\begin{enumerate}
+  \item \textbf{Product:} If $X\Tof{f} Y$ and $X\Tof{g} Z$ are functions with the same domain, we define their \textbf{product} by $(f,g):=f\times g \circ \delta$  (which we will denote $(f,g)$ to distinguish it from the Cartesian product).  Expressed more explicitly, the product is
+ \[    (f,g):X\To Y\times Z \qquad x\mTo (f(x),g(x)). \]  
+\item \textbf{Pointwise Operations:} Given any set $X$ and operation $Y^n\Tof{\mu} Y$, we can define an operation (also denoted $\mu$) on the set of functins $\Sets(X,Y)$ by so-called \textbf{pointwise} application of the operation.  Explicitly, for $f_1,\dots,f_n\in \Sets(X,Y)$ 
+\[\mu(f_1,\dots,f_n):X\To Y\qquad \mu(f_1,\dots,f_n)(x):=\mu(f_1(x),\dots,f_n(x))\]
+\end{enumerate}
+\begin{example}[Product] A function $X\Tof{f} \Rb^n$ (often called a \textbf{vector-valued function on X}) is the same thing as a product of $n$ real-valued functions.  That is, 
+\[ f\equiv (f_1,\dots,f_n):X\To \Rb^n \qquad f_i\in \Sets(X,\Rb). \]
+\end{example}
+\begin{example}[Pointwise Addition of Functions]
+Let $\Rb^2\Tof{\mu}\Rb$ be addition, then for $f,g\in\Sets(X,\Rb)$, we have pointwise additon $\op(f,g)(x):= f(x)+g(x)$.  In this case we just write $f+g$.  Similarly $fg$ denotes the pointwise multiplication of functions. 
+\end{example}
+
+
+\begin{remark}Pointwise operations are obtained by function composition.  Indeed, for any set $X$ and operation $\op\in\Sets(Y^n,Y)$, the resulting pointwise operation on $\Sets(X,Y)$ is:
+\[ \Sets(X,Y)^n\To\Sets(X,Y)\qquad (f_1,\dots,f_n)\mTo \op\circ(f_1,\dots,f_n)\circ\diag_X^n.\] 
+\end{remark}
+
+
+\subsection{Some properties of $\Rb^n$} For any $n\in\Nb$, $$\Rb^n = \{(a_1,\dots,a_n\pipe a_i\in\Rb)$$ is the set of $n-$tuples of real numbers.  But $\Rb^n$ admits much more structure than just that of a set.  Here is some of the structure we will implicitly equip $Rb^n$ with:
 \begin{enumerate}
 \item It is a vector space, and whenever convenient we switch back and forth between viewing elements of $\Rb^n$ as vectors and as points.
 \item For every $p\in [1,\infty]$ there is a measure of \textbf{magnitude (or length)} on $\Rb^n$, given by the formula
